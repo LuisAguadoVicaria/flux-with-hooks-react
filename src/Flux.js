@@ -12,8 +12,8 @@ const useFlux = () => {
 
   const setStore = (obj) => _setStore({ ...store, ...obj });
   return {
-    /** Global functions. */
     actions: {
+      /** Global functions. */
       /** Example of a global function. */
       hideTextToggle: () => {
         /** Set and access Flux within Flux. */
