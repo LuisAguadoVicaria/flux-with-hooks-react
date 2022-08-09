@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+<h1 align="center">Flux with hooks in React</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center" >
+  Simple Flux architecture for React applications, allowing to use Hooks and access/edit from anywhere. Designed for small projects. Code improvements are welcome.
+</p>
+<p align="center" >
+  <a href="https://luisaguadovicaria.github.io/flux-with-hooks-react">
+    <img height="44px"  src="https://github.com/LuisAguadoVicaria/LuisAguadoVicaria/raw/main/proyect-images/live-demo-button.png" alt="live-demo" align="center">
+  </a>
+</p>
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<div align="center">
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+[![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)]()[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 
-### `npm test`
+</div>
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<code>Flux.js</code>
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+````JSX
+import { useState, useNavigate } from "react";
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+/** Use any React Hook of your choice */
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const useFlux = () => {
+  const [store, _setStore] = useState({
+    /** Global store objects. */
+    hide: false,
+    var1: "val1",
+    save: { any: "obj" },
+  });
 
-### `npm run eject`
+  const setStore = (obj) => _setStore({ ...store, ...obj });
+  return {
+    actions: {
+      /** Global functions. */
+      /** Example of a global function. */
+      hideTextToggle: () => {
+        /** Set and access Flux within Flux. */
+        setStore({ hide: !store.hide });
+      },
+    },
+    store: store,
+    setStore: (obj) => setStore(obj),
+  };
+};
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+export default useFlux;
+````
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<code>index.js</code>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+````JSX
+...
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+/** Import useFlux and define the global context. */
+import useFlux from "./Flux";
+const AppContext = React.createContext();
 
-## Learn More
+...
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+/** Wrap the context and inject useFlux(). */
+const Index = () => (
+  <AppContext.Provider value={useFlux()}>
+    <App />
+  </AppContext.Provider>
+);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+...
 
-### Code Splitting
+/** Export the context as React custom hook. */
+export const useAppContext = () => useContext(AppContext);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+````
 
-### Analyzing the Bundle Size
+<code>anycomponent.js</code>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+````JSX
+/** Import the global context. */
+import { useAppContext } from "./index";
 
-### Making a Progressive Web App
+...
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  /** Declare helpers to manipulate the context. */
+  const { store, setStore, actions } = useAppContext();
+  
+...
 
-### Advanced Configuration
+/** Change or set your global variables. */
+         ... onClick={() => setStore({ var1: "val1-changed", adding: "another" })}
+          
+...
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+/** Call your global functions. */
+         ... onClick={() => actions.hideTextToggle()}
 
-### Deployment
+````
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Deployment
 
-### `npm run build` fails to minify
+- Assuming you have installed Node.js locally, run: `npm install`
+- Run: `npm run start` to start development server and test the live web site.
+- Run: `npm run build` to compile the site for production.
+- Look for the `/build` folder.
+- Make sure the HTML and JS paths are correct and install the site on your preferred web server.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<sub><sub>You can also open any GitHub repository in Gitpod</sub></sub> 
+  
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/LuisAguadoVicaria/flux-with-hooks-react)
+
+## Contact
+
+  <sub>Feel free to leave me a message, I'm friendly!</sub>
+  
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/luis-aguado-vicar%C3%ADa-546b33241/)
