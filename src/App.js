@@ -1,22 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+
+/** Import the global context. */
+import { useAppContext } from "./index";
 
 function App() {
+  /** Declare the helpers to manipulate context. */
+  const { store, setStore, actions } = useAppContext();
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Flux_: <code>{JSON.stringify(store)}</code>
         </p>
-        <a
+        <button
+          /** Change or set your global variables. */
+          onClick={() => setStore({ var1: "val1-changed", adding: "another" })}
           className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
         >
-          Learn React
-        </a>
+          Change Flux
+        </button>
+        <button
+          /** Call your global functions. */
+          onClick={() => actions.hideTextToggle()}
+          className="App-link"
+        >
+          Toggle Text
+        </button>
+        {!store.hide ? "Toggled text" : null}
       </header>
     </div>
   );
