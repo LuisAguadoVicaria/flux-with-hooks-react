@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/flux-with-hooks-react/static/css/main.5bcfa7b5.css",
+    "main.js": "/flux-with-hooks-react/static/js/main.cc231400.js",
+    "static/js/787.468be2db.chunk.js": "/flux-with-hooks-react/static/js/787.468be2db.chunk.js",
+    "static/media/logo.svg": "/flux-with-hooks-react/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/flux-with-hooks-react/index.html",
+    "main.5bcfa7b5.css.map": "/flux-with-hooks-react/static/css/main.5bcfa7b5.css.map",
+    "main.cc231400.js.map": "/flux-with-hooks-react/static/js/main.cc231400.js.map",
+    "787.468be2db.chunk.js.map": "/flux-with-hooks-react/static/js/787.468be2db.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5bcfa7b5.css",
+    "static/js/main.cc231400.js"
+  ]
+}
