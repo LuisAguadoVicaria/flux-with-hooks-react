@@ -5,7 +5,7 @@ import "./App.css";
 import { useAppContext } from "./index";
 
 function App() {
-  /** Declare the helpers to manipulate context. */
+  /** Declare helpers to manipulate the context. */
   const { store, setStore, actions } = useAppContext();
 
   return (
